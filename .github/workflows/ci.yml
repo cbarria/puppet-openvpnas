@@ -14,7 +14,7 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
       - run: bundle install --path .vendor
-      - run: bundle exec rake lint
-      - run: bundle exec rake metadata_lint
-      - run: bundle exec rake spec
+      - run: bundle exec rake test
+      - name: Generate REFERENCE.md
+        run: bundle exec rake strings:generate
 

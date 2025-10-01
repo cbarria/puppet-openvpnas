@@ -1,0 +1,7 @@
+---
+# modulesync configuration stub aligned with lsst-it modules
+namespace: cbarria
+branch: main
+modules:
+  - puppet-openvpnas
+

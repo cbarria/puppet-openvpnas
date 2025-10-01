@@ -1,0 +1,11 @@
+---
+# Minimal sync config inspired by lsst-it modules
+Gemfile:
+  voxpupuli: false
+rubocop:
+  enabled: true
+puppet_lint:
+  enabled: true
+github_actions:
+  enable_strings: true
+
