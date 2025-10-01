@@ -64,19 +64,26 @@ class openvpnas (
     }
   }
 
+  # Compute resource attributes to avoid selectors inside blocks
+  $pkg_ensure = $version ? {
+    undef   => present,
+    default => $version,
+  }
+
+  $pkg_require = $manage_repo ? {
+    true    => Yumrepo[$yumrepo_id],
+    default => undef,
+  }
+
+  $pkg_notify = $versionlock_enable ? {
+    true    => Yum::Versionlock[$package_name],
+    default => undef,
+  }
+
   package { $package_name:
-    ensure  => $version ? {
-      undef   => present,
-      default => $version,
-    },
-    require => $manage_repo ? {
-      true    => Yumrepo[$yumrepo_id],
-      default => undef,
-    },
-    notify  => $versionlock_enable ? {
-      true    => Yum::Versionlock[$package_name],
-      default => undef,
-    },
+    ensure  => $pkg_ensure,
+    require => $pkg_require,
+    notify  => $pkg_notify,
   }
 
   if $versionlock_enable {
@@ -117,8 +124,8 @@ class openvpnas (
 
   if $manage_service {
     service { $service_name:
-      ensure => running,
-      enable => true,
+      ensure  => running,
+      enable  => true,
       require => Package[$package_name],
     }
   }

@@ -20,7 +20,7 @@ define openvpnas::config::import (
 
   exec { 'openvpnas-config-import':
     path        => ['/bin', '/usr/bin', '/sbin', '/usr/sbin'],
-    command     => "/usr/local/openvpn_as/scripts/sacli --key """ -v \"$(cat ${staging_path})\" ConfigPut",
+    command     => "/usr/local/openvpn_as/scripts/sacli -v \"$(cat ${staging_path})\" ConfigReplace",
     refreshonly => true,
     subscribe   => File[$staging_path],
   }
