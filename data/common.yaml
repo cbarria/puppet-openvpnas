@@ -1,0 +1,16 @@
+---
+openvpnas::manage_repo: true
+openvpnas::yumrepo_baseurl: 'http://as-repository.openvpn.net/as/yum/rhel9/'
+openvpnas::yumrepo_name: 'openvpn-access-server'
+openvpnas::yumrepo_id: 'as-repo-rhel9'
+openvpnas::gpgkey_url: 'https://as-repository.openvpn.net/as-repo-public.gpg'
+openvpnas::package_name: 'openvpn-as'
+openvpnas::service_name: 'openvpnas'
+openvpnas::manage_service: true
+openvpnas::version: ~
+openvpnas::versionlock_enable: false
+openvpnas::versionlock_release: '1.el9'
+openvpnas::manage_web_certs: false
+openvpnas::cert_source_path: "/etc/letsencrypt/live/%{facts.networking.fqdn}"
+
+

@@ -1,0 +1,9 @@
+.bundle/
+pkg/
+spec/fixtures/manifests/
+coverage/
+.vendor/
+.DS_Store
+Gemfile.lock
+
+

@@ -1,0 +1,25 @@
+{
+  "name": "cbarria-openvpnas",
+  "version": "0.1.0",
+  "author": "cbarria",
+  "summary": "Installs and configures OpenVPN Access Server (AS)",
+  "license": "Apache-2.0",
+  "source": "https://github.com/cbarria/puppet-openvpnas",
+  "project_page": "https://github.com/cbarria/puppet-openvpnas",
+  "issues_url": "https://github.com/cbarria/puppet-openvpnas/issues",
+  "tags": ["openvpn", "vpn", "access-server", "networking", "security", "almalinux"],
+  "dependencies": [
+    {"name": "puppetlabs/stdlib", "version_requirement": ">= 9.0.0 < 10.0.0"},
+    {"name": "puppet/yum", "version_requirement": ">= 8.0.0 < 9.0.0"}
+  ],
+  "requirements": [
+    {"name": "puppet", "version_requirement": ">= 7.0.0 < 9.0.0"}
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": ["9"]
+    }
+  ]
+}
+
