@@ -4,6 +4,7 @@ fixtures:
     stdlib: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
     yum: 'https://github.com/voxpupuli/puppet-yum.git'
     yumrepo_core: 'https://github.com/puppetlabs/puppetlabs-yumrepo_core.git'
+    concat: 'https://github.com/puppetlabs/puppetlabs-concat.git'
   symlinks:
     openvpnas: '#{source_dir}'
 
