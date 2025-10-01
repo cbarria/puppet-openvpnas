@@ -9,7 +9,7 @@ gem 'puppetlabs_spec_helper', '~> 6.0'
 gem 'rubocop', '~> 1.64'
 gem 'rubocop-performance'
 gem 'rubocop-rspec'
-gem 'facterdb', '~> 2.0'
+gem 'facterdb', '~> 1.12'
 gem 'rake'
 gem 'beaker-rspec', group: :test
 gem 'serverspec', group: :test
