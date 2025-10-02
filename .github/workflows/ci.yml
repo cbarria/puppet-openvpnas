@@ -17,4 +17,6 @@ jobs:
       - name: Generate REFERENCE.md
         run: bundle exec rake strings:generate:reference
       - run: bundle exec rake test
+      - name: Acceptance (AlmaLinux 9)
+        run: bundle exec rake acceptance:local docker_set=centos9
 

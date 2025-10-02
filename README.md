@@ -3,32 +3,28 @@ OpenVPN Access Server (openvpnas) Puppet module
 
 Overview
 --------
-Gestiona la instalación de OpenVPN Access Server, el repo opcional, version lock, enlaces de certificados para la UI web y configuración básica vía `sacli`.
+Install and configure OpenVPN Access Server. Supports optional repo setup, package version locking, web UI TLS certificate symlinks, and basic configuration via `sacli`.
 
-Estructura
----------
-El módulo sigue la estructura de `puppet-htcondor` como referencia ([lsst-it/puppet-htcondor](https://github.com/lsst-it/puppet-htcondor)).
+Usage
+-----
 
-Uso
----
-
-1) Básico
+1) Basic
 ```puppet
 class { 'openvpnas':
   manage_repo => true,
 }
 ```
 
-2) Fijar versión y activar versionlock
+2) Pin version and enable versionlock
 ```puppet
 class { 'openvpnas':
-  manage_repo         => true,
-  version             => '3.6.1',
-  versionlock_enable  => true,
+  manage_repo        => true,
+  version            => '3.6.1',
+  versionlock_enable => true,
 }
 ```
 
-3) Enlazar certificados de Let's Encrypt a la UI web
+3) Link Let's Encrypt certs to the web UI
 ```puppet
 class { 'openvpnas':
   manage_web_certs => true,
@@ -36,43 +32,43 @@ class { 'openvpnas':
 }
 ```
 
-4) Declarar configuración clave-valor con `sacli`
+4) Apply key-value config via `sacli`
 ```puppet
 class { 'openvpnas':
   config => {
     'vpn.server.daemon.enable' => true,
-    'sa.company_name'          => 'LSST',
+    'sa.company_name'          => 'ACME',
   }
 }
 ```
 
-5) Importar JSON (best-effort)
+5) Bulk import JSON config (best-effort)
 ```puppet
 openvpnas::config::import { 'site-config':
   source => 'puppet:///modules/openvpnas/config.json',
 }
 ```
 
-Parámetros principales
-----------------------
-- manage_repo (Boolean): gestiona repo de AS.
-- version (String|Undef): versión del paquete.
-- versionlock_enable (Boolean): activa `yum::versionlock`.
-- manage_service (Boolean): gestiona servicio `openvpnas`.
-- manage_web_certs (Boolean): crea symlinks a certs LE.
-- cert_source_path (String): ruta con `cert.pem`, `privkey.pem`, `fullchain.pem`.
-- config (Hash|Undef): mapa de claves `sacli` a valores.
+Parameters
+----------
+- manage_repo (Boolean): manage OpenVPN AS yum repo.
+- version (String|Undef): package version to install.
+- versionlock_enable (Boolean): enable `yum::versionlock`.
+- manage_service (Boolean): manage `openvpnas` service.
+- manage_web_certs (Boolean): create LE cert symlinks.
+- cert_source_path (String): path with `cert.pem`, `privkey.pem`, `fullchain.pem`.
+- config (Hash|Undef): sacli keys to apply.
 
-Compatibilidad
---------------
+Compatibility
+-------------
 - AlmaLinux 9
 
-Tests
------
-- Unit: `bundle exec rake spec`
-- Acceptance (skeleton Beaker): ver `spec/acceptance/`
+Testing
+-------
+- Unit/style/integration: `bundle exec rake test`
+- Acceptance (Docker): `bundle exec rake acceptance:local docker_set=centos9`
 
-Licencia
---------
+License
+-------
 Apache-2.0
 
