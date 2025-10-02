@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# rubocop:disable RSpec/DescribeClass
 describe 'openvpnas' do
   on_supported_os.each do |os, os_facts|
     context "when on #{os}" do
@@ -52,4 +51,3 @@ describe 'openvpnas' do
     end
   end
 end
-# rubocop:enable RSpec/DescribeClass

@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# rubocop:disable RSpec/DescribeClass
 describe 'openvpnas::config::import' do
   let(:title) { 'bulk' }
   let(:params) do
@@ -27,4 +26,3 @@ describe 'openvpnas::config::import' do
     end
   end
 end
-# rubocop:enable RSpec/DescribeClass

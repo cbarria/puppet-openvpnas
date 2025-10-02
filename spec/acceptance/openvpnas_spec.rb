@@ -2,7 +2,6 @@
 
 require 'voxpupuli/acceptance/spec_helper_acceptance'
 
-# rubocop:disable RSpec/DescribeClass
 describe 'openvpnas class' do
   hosts.each do |host|
     context "when on #{host}" do
@@ -22,4 +21,3 @@ describe 'openvpnas class' do
     end
   end
 end
-# rubocop:enable RSpec/DescribeClass

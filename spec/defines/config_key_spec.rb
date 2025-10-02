@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# rubocop:disable RSpec/DescribeClass
 describe 'openvpnas::config::key' do
   let(:title) { 'vpn.server.daemon.enable' }
   let(:params) do
@@ -22,4 +21,3 @@ describe 'openvpnas::config::key' do
     end
   end
 end
-# rubocop:enable RSpec/DescribeClass

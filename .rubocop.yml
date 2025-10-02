@@ -28,6 +28,10 @@ RSpec/MultipleExpectations:
 RSpec/NestedGroups:
   Max: 5
 
+# Puppet specs describe module/class names as strings, not Ruby classes
+RSpec/DescribeClass:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
