@@ -72,21 +72,22 @@ jobs:
     name: Acceptance Tests
     runs-on: ubuntu-latest
     needs: unit
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     strategy:
       fail-fast: false
       matrix:
         setfile:
-          - centos9
+          - docker-almalinux9
     steps:
       - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-cache: true
       - name: Run acceptance tests
         run: bundle exec rake beaker
         env:
-          BEAKER_HYPERVISOR: docker
-          BEAKER_set: ${{ matrix.setfile }}
-          BEAKER_destroy: onpass
+          BEAKER_PUPPET_COLLECTION: puppet8
+          BEAKER_setfile: spec/acceptance/nodesets/${{ matrix.setfile }}.yml
 
