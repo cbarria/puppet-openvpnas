@@ -16,10 +16,10 @@ describe 'openvpnas class' do
       end
 
       it 'applies with no errors' do
-        idempotent_apply(pp)
+        result = idempotent_apply(pp)
+        expect(result.exit_code).to eq(0)
       end
     end
   end
 end
 # rubocop:enable RSpec/DescribeClass
-
