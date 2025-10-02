@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'facterdb', '~> 3.1'
 gem 'metadata-json-lint', '>= 2.0', '< 5.0'
 gem 'puppet', '~> 8.0'
-gem 'puppet-blacksmith', '~> 7.0', require: false
+gem 'puppet-blacksmith', '>= 8.0', require: false
 gem 'puppet-lint', '~> 4.0'
 gem 'puppet-strings', '~> 4.0'
 gem 'puppetlabs_spec_helper', '~> 7.0'
