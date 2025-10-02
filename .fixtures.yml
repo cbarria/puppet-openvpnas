@@ -1,19 +1,8 @@
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 ---
 fixtures:
-  repositories:
+  forge_modules:
     stdlib:
-      'https://github.com/puppetlabs/puppetlabs-stdlib.git'
-    yum:
-      'https://github.com/voxpupuli/puppet-yum.git'
-    yumrepo_core:
-      'https://github.com/puppetlabs/puppetlabs-yumrepo_core.git'
-    concat:
-      'https://github.com/puppetlabs/puppetlabs-concat.git'
-    augeas_core:
-      'https://github.com/puppetlabs/puppetlabs-augeas_core.git'
-    augeasproviders_core:
-      'https://github.com/hercules-team/augeasproviders_core.git'
-    augeasproviders_shellvar:
-      'https://github.com/hercules-team/augeasproviders_shellvar.git'
-  symlinks:
-    openvpnas: '#{source_dir}'
+      repo: 'puppetlabs/stdlib'
+      ref: '9.6.0'
