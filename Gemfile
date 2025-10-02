@@ -1,7 +1,37 @@
-source 'https://rubygems.org'
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
-gem 'metadata-json-lint', '>= 2.0', '< 5.0'
-gem 'puppet-blacksmith', '>= 8.0', require: false
-gem 'voxpupuli-acceptance', '~> 4.0', require: false
-gem 'voxpupuli-test', '~> 9.0', require: false
+source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
+group :test do
+  gem 'voxpupuli-test', '~> 9.0',               :require => false
+  gem 'coveralls',                              :require => false
+  gem 'simplecov-console',                      :require => false
+  gem 'puppet_metadata', '~> 5.0',              :require => false
+  gem 'puppet-lint-package_ensure-check',       :require => false
+  gem 'puppet-lint-resource_reference_syntax',  :require => false
+  gem 'puppet-lint-strict_indent-check',        :require => false
+  gem 'puppet-lint-unquoted_string-check',      :require => false
+  gem 'puppet-lint-variable_contains_upcase',   :require => false
+end
+
+group :development do
+  gem 'guard-rake',               :require => false
+  gem 'overcommit', '>= 0.39.1',  :require => false
+end
+
+group :system_tests do
+  gem 'voxpupuli-acceptance', '~> 3.5',  :require => false
+end
+
+group :release do
+  gem 'voxpupuli-release', '~> 3.0',  :require => false
+end
+
+gem 'rake', :require => false
+gem 'facter', ENV['FACTER_GEM_VERSION'], :require => false, :groups => [:test]
+
+puppetversion = ENV['PUPPET_GEM_VERSION'] || [">= 7.24", "< 9"]
+gem 'puppet', puppetversion, :require => false, :groups => [:test]
+
+# vim: syntax=ruby
