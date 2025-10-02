@@ -13,4 +13,3 @@ jobs:
 
       - name: Run yamllint
         uses: bewuethr/yamllint-action@v1
-

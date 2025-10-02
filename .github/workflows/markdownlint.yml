@@ -15,4 +15,3 @@ jobs:
         uses: actionshub/markdownlint@main
         with:
           filesToIgnoreRegex: "REFERENCE.md|CHANGELOG.md"
-

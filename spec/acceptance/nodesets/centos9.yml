@@ -11,4 +11,3 @@ HOSTS:
 CONFIG:
   log_level: debug
   type: aio
-

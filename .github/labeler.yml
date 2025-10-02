@@ -2,20 +2,19 @@
 # Add 'documentation' label to any change to documentation files
 documentation:
   - changed-files:
-    - any-glob-to-any-file: '**/*.md'
+      - any-glob-to-any-file: '**/*.md'
 
 # Add 'tests' label to any change to test files
 tests:
   - changed-files:
-    - any-glob-to-any-file: 'spec/**/*'
+      - any-glob-to-any-file: 'spec/**/*'
 
 # Add 'manifests' label to any change to manifest files
 manifests:
   - changed-files:
-    - any-glob-to-any-file: 'manifests/**/*'
+      - any-glob-to-any-file: 'manifests/**/*'
 
 # Add 'github-actions' label to any change to GitHub Actions
 github-actions:
   - changed-files:
-    - any-glob-to-any-file: '.github/workflows/*'
-
+      - any-glob-to-any-file: '.github/workflows/*'

@@ -13,4 +13,3 @@ openvpnas::versionlock_release: '1.el9'
 openvpnas::manage_web_certs: false
 openvpnas::cert_source_path: "/etc/letsencrypt/live/%{facts.networking.fqdn}"
 
-

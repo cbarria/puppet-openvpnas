@@ -4,11 +4,13 @@
 
 name: 'Prepare Release'
 
-on:
+'on':
   workflow_dispatch:
     inputs:
       version:
-        description: 'Module version to be released. Must be a valid semver string without leading v. (1.2.3)'
+        description: >-
+          Module version to be released.
+          Must be a valid semver string without leading v. (1.2.3)
         required: false
 
 jobs:
@@ -21,4 +23,3 @@ jobs:
       # Configure secrets here:
       #  https://docs.github.com/en/actions/security-guides/encrypted-secrets
       github_pat: '${{ secrets.GITHUB_TOKEN }}'
-
