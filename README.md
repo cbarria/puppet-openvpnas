@@ -192,7 +192,7 @@ Each key-value pair is applied using `sacli ConfigPut` and automatically restart
 Common configuration keys include:
 - `vpn.server.daemon.enable`: Enable/disable VPN daemon
 - `vpn.server.daemon.tcp.port`: TCP port for VPN connections
-- `vpn.server.daemon.udp.port`: UDP port for VPN connections  
+- `vpn.server.daemon.udp.port`: UDP port for VPN connections
 - `host.name`: Hostname for certificates and web UI
 - `sa.company_name`: Company name displayed in web UI
 - `cs.tls_version_min`: Minimum TLS version
@@ -270,14 +270,14 @@ class { 'openvpnas':
   manage_repo         => true,
   version             => '2.13.1',
   versionlock_enable  => true,
-  
+
   # Service management
   manage_service      => true,
-  
+
   # TLS certificate integration
   manage_web_certs    => true,
   cert_source_path    => "/etc/letsencrypt/live/${facts['networking']['fqdn']}",
-  
+
   # Base configuration
   config              => {
     'host.name'                     => $facts['networking']['fqdn'],
