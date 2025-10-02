@@ -34,6 +34,3 @@ define openvpnas::config::import (
     }
   }
 }
-
-
-

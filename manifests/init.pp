@@ -26,23 +26,24 @@
 #   If true, create symlinks for web UI TLS certs to Let's Encrypt paths.
 # @param cert_source_path
 #   Where the Let's Encrypt certs live (cert.pem, privkey.pem, fullchain.pem).
+# @param config
+#   Optional hash of OpenVPN AS config keys to apply via sacli.
 class openvpnas (
-  Boolean $manage_repo           = lookup('openvpnas::manage_repo'),
-  String  $yumrepo_baseurl       = lookup('openvpnas::yumrepo_baseurl'),
-  String  $yumrepo_name          = lookup('openvpnas::yumrepo_name'),
-  String  $yumrepo_id            = lookup('openvpnas::yumrepo_id'),
-  String  $gpgkey_url            = lookup('openvpnas::gpgkey_url'),
-  String  $package_name          = lookup('openvpnas::package_name'),
-  Optional[String] $version      = lookup('openvpnas::version'),
-  Boolean $versionlock_enable    = lookup('openvpnas::versionlock_enable'),
-  String  $versionlock_release   = lookup('openvpnas::versionlock_release'),
-  Boolean $manage_service        = lookup('openvpnas::manage_service'),
-  String  $service_name          = lookup('openvpnas::service_name'),
-  Boolean $manage_web_certs      = lookup('openvpnas::manage_web_certs'),
-  String  $cert_source_path      = lookup('openvpnas::cert_source_path'),
+  Boolean $manage_repo           = false,
+  String  $yumrepo_baseurl       = 'http://as-repository.openvpn.net/as/yum/rhel9/',
+  String  $yumrepo_name          = 'openvpn-access-server',
+  String  $yumrepo_id            = 'as-repo-rhel9',
+  String  $gpgkey_url            = 'https://as-repository.openvpn.net/as-repo-public.gpg',
+  String  $package_name          = 'openvpn-as',
+  Optional[String] $version      = undef,
+  Boolean $versionlock_enable    = false,
+  String  $versionlock_release   = '1.el9',
+  Boolean $manage_service        = true,
+  String  $service_name          = 'openvpnas',
+  Boolean $manage_web_certs      = false,
+  String  $cert_source_path      = "/etc/letsencrypt/live/${facts['networking']['fqdn']}",
   Optional[Hash] $config         = undef,
-)
-{
+) {
   # Optional repo management
   if $manage_repo {
     yumrepo { $yumrepo_id:
@@ -140,5 +141,3 @@ class openvpnas (
     }
   }
 }
-
-

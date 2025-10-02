@@ -29,5 +29,3 @@ define openvpnas::config::key (
     subscribe   => Exec["openvpnas-set-${name}"],
   }
 }
-
-
