@@ -6,3 +6,4 @@ fixtures:
     extlib: "puppet/extlib"
     stdlib: "puppetlabs/stdlib"
     yumrepo_core: "puppetlabs/yumrepo_core"
+    yum: "puppet/yum"
