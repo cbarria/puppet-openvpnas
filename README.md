@@ -492,6 +492,175 @@ Generate reference documentation:
 bundle exec rake strings:generate:reference
 ```
 
+### Testing on Windows with WSL2
+
+You can quickly test this module on Windows using WSL2 with AlmaLinux 9.
+This is perfect for local development and testing before deploying to
+production.
+
+#### Prerequisites
+
+- Windows 10/11 with WSL2 enabled
+- Docker Desktop (optional, not required for this method)
+
+#### Step 1: Install AlmaLinux 9 on WSL2
+
+```powershell
+# List available distributions
+wsl --list --online
+
+# Install AlmaLinux 9
+wsl --install AlmaLinux-9
+
+# Launch AlmaLinux
+wsl -d AlmaLinux-9
+```
+
+During first launch, you'll be prompted to create a user account.
+
+#### Step 2: Install Dependencies
+
+Inside your AlmaLinux WSL instance:
+
+```bash
+# Install Puppet repository
+sudo dnf install -y https://yum.puppet.com/puppet7-release-el-9.noarch.rpm
+
+# Install Puppet Agent
+sudo dnf install -y puppet-agent
+
+# Add Puppet to PATH for current session
+export PATH="/opt/puppetlabs/bin:$PATH"
+```
+
+#### Step 3: Clone and Install Module
+
+```bash
+# Clone the repository (or use your local Windows files via /mnt/c/)
+cd ~
+git clone https://github.com/cbarria/puppet-openvpnas.git
+cd puppet-openvpnas
+
+# Copy module to Puppet's module path
+sudo mkdir -p /etc/puppetlabs/code/modules/openvpnas
+sudo cp -r manifests /etc/puppetlabs/code/modules/openvpnas/
+sudo cp -r data /etc/puppetlabs/code/modules/openvpnas/
+sudo cp metadata.json /etc/puppetlabs/code/modules/openvpnas/
+sudo cp hiera.yaml /etc/puppetlabs/code/modules/openvpnas/
+```
+
+#### Step 4: Apply the Module
+
+```bash
+# Apply with puppet apply
+sudo /opt/puppetlabs/bin/puppet apply -e '
+  class { "openvpnas":
+    manage_repo    => true,
+    manage_service => false,
+  }
+' --modulepath=/etc/puppetlabs/code/modules
+```
+
+**Note:** We set `manage_service => false` because systemd in WSL2 requires
+additional configuration. The package will install successfully, and you can
+test the configuration management features.
+
+#### Step 5: Verify Installation
+
+```bash
+# Verify package is installed
+rpm -q openvpn-as
+
+# Check installed version
+rpm -qi openvpn-as | head -20
+
+# Verify OpenVPN AS files
+ls -la /usr/local/openvpn_as/
+
+# Start the service manually (if systemd is configured)
+sudo systemctl start openvpnas
+
+# Check service status
+systemctl status openvpnas
+
+# Test configuration query (requires service to be running)
+sudo /usr/local/openvpn_as/scripts/sacli ConfigQuery
+```
+
+#### Step 6: Access Web Interface
+
+If the service is running, you can access the web interface from Windows:
+
+- Admin UI: `https://localhost:943/admin`
+- User UI: `https://localhost:943/`
+
+Default credentials:
+
+- Username: `openvpn`
+- Password: Set during first installation (check init.log)
+
+#### Configuration Testing
+
+Test configuration management features:
+
+```bash
+# Export current configuration
+sudo /usr/local/openvpn_as/scripts/sacli ConfigQuery > /tmp/config-backup.json
+
+# Apply configuration via Puppet
+sudo /opt/puppetlabs/bin/puppet apply -e '
+  class { "openvpnas":
+    manage_repo => true,
+    config      => {
+      "host.name"                  => "test.local",
+      "sa.company_name"            => "Test Company",
+      "vpn.server.daemon.tcp.port" => 443,
+    }
+  }
+' --modulepath=/etc/puppetlabs/code/modules
+
+# Verify changes
+sudo /usr/local/openvpn_as/scripts/sacli ConfigQuery | grep -E '(host\.name|sa\.company_name|tcp\.port)'
+```
+
+#### Troubleshooting
+
+**Issue:** systemd not working in WSL2
+
+```bash
+# Check if systemd is enabled
+cat /etc/wsl.conf
+
+# Enable systemd (add to /etc/wsl.conf)
+sudo tee /etc/wsl.conf > /dev/null <<EOF
+[boot]
+systemd=true
+EOF
+
+# Restart WSL from PowerShell
+wsl --shutdown
+wsl -d AlmaLinux-9
+```
+
+**Issue:** Cannot access web interface
+
+- Ensure Windows Firewall allows connections to port 943
+- Check if the service is actually running: `sudo systemctl status openvpnas`
+- View logs: `sudo tail -f /usr/local/openvpn_as/init.log`
+
+**Issue:** "Permission denied" errors
+
+- Always use `sudo` for Puppet apply and sacli commands
+- Ensure you're using full paths: `/usr/local/openvpn_as/scripts/sacli`
+
+#### Benefits of WSL2 Testing
+
+- **Fast iteration**: Test changes in seconds without VM overhead
+- **Easy cleanup**: Remove WSL instance and start fresh anytime
+- **Realistic environment**: AlmaLinux 9 matches production RHEL 9
+- **Native integration**: Access files from Windows, use Windows editors
+- **No Docker required**: Direct systemd integration (with configuration)
+
 ### Code Quality
 
 This module uses:
