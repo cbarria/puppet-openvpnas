@@ -39,6 +39,11 @@ OpenVPN Access Server is the commercial VPN solution from OpenVPN Inc.,
 offering a web-based administration interface and easier setup compared to
 the community edition.
 
+![OpenVPN Access Server Dashboard](docs/images/openvpnas-dashboard.png)
+
+*OpenVPN Access Server 3.0.1 running on AlmaLinux 9 - Installed and
+managed via Puppet*
+
 ## Setup
 
 ### What openvpnas affects
