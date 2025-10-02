@@ -3,6 +3,7 @@
 ---
 fixtures:
   forge_modules:
+    concat: "puppetlabs/concat"
     extlib: "puppet/extlib"
     stdlib: "puppetlabs/stdlib"
     yumrepo_core: "puppetlabs/yumrepo_core"
