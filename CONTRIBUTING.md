@@ -5,12 +5,12 @@
 To contribute to this module:
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b my-new-feature`)
-3. Make your changes
-4. Run tests locally (see below)
-5. Commit your changes (`git commit -am 'Add some feature'`)
-6. Push to the branch (`git push origin my-new-feature`)
-7. Create a new Pull Request
+1. Create a feature branch (`git checkout -b my-new-feature`)
+1. Make your changes
+1. Run tests locally (see below)
+1. Commit your changes (`git commit -am 'Add some feature'`)
+1. Push to the branch (`git push origin my-new-feature`)
+1. Create a new Pull Request
 
 ## Running Tests
 
@@ -64,7 +64,9 @@ bundle exec rake strings:generate:reference
 
 ## Code Style
 
-This module follows the [Puppet Language Style Guide](https://puppet.com/docs/puppet/latest/style_guide.html) and uses RuboCop for Ruby code.
+This module follows the
+[Puppet Language Style Guide](https://puppet.com/docs/puppet/latest/style_guide.html)
+and uses RuboCop for Ruby code.
 
 ## Pull Request Guidelines
 
@@ -75,7 +77,6 @@ This module follows the [Puppet Language Style Guide](https://puppet.com/docs/pu
 - Add tests for new features
 - Update CHANGELOG.md with your changes
 
-## Questions?
+## Questions
 
 Open an issue if you have questions or need help!
-

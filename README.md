@@ -8,11 +8,11 @@
 ## Table of Contents
 
 1. [Description](#description)
-2. [Setup](#setup)
-3. [Usage](#usage)
-4. [Reference](#reference)
-5. [Limitations](#limitations)
-6. [Development](#development)
+1. [Setup](#setup)
+1. [Usage](#usage)
+1. [Reference](#reference)
+1. [Limitations](#limitations)
+1. [Development](#development)
 
 ## Description
 
@@ -131,16 +131,17 @@ Currently tested and supported on:
 - AlmaLinux 9
 - CentOS 9 Stream
 
-This module is designed for OpenVPN Access Server, not the open-source OpenVPN Community Edition.
+This module is designed for OpenVPN Access Server, not the open-source
+OpenVPN Community Edition.
 
 ## Development
 
 Contributions are welcome! Please:
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes with tests
-4. Submit a pull request
+1. Create a feature branch
+1. Make your changes with tests
+1. Submit a pull request
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
@@ -168,4 +169,3 @@ Apache-2.0 - See [LICENSE](LICENSE) file for details.
 ## Authors
 
 - Carlos Barria
-
