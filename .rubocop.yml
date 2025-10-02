@@ -1,42 +1,6 @@
 ---
-require:
-  - rubocop-rake
-  - rubocop-rspec
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
-AllCops:
-  NewCops: enable
-  TargetRubyVersion: 2.7
-  Exclude:
-    - 'vendor/**/*'
-    - 'pkg/**/*'
-    - '.vendor/**/*'
-    - 'spec/fixtures/**/*'
-    - 'Gemfile'
-    - 'Rakefile'
-
-# Puppet modules are generally documentation-heavy
-Metrics/BlockLength:
-  Enabled: false
-
-# RSpec tests can have long describe blocks
-RSpec/ExampleLength:
-  Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false
-
-RSpec/NestedGroups:
-  Max: 5
-
-# Puppet specs describe module/class names as strings, not Ruby classes
-RSpec/DescribeClass:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/StringLiterals:
-  EnforcedStyle: single_quotes
-
-Layout/LineLength:
-  Max: 120
+inherit_gem:
+  voxpupuli-test: rubocop.yml

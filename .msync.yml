@@ -1,7 +1,5 @@
 ---
-# modulesync configuration stub aligned with lsst-it modules
-namespace: cbarria
-branch: main
-modules:
-  - puppet-openvpnas
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
+modulesync_config_version: '9.5.0'
