@@ -315,6 +315,68 @@ openvpnas::config::import { 'network-config':
 }
 ```
 
+### FreeIPA/LDAP Integration
+
+For environments using FreeIPA or LDAP for centralized authentication:
+
+```puppet
+# OpenVPN AS with FreeIPA authentication
+class { 'openvpnas':
+  manage_repo    => true,
+  manage_service => true,
+  config         => {
+    # FreeIPA/LDAP authentication
+    'auth.module.type'              => 'ldap',
+    'auth.ldap.0.server.0.host'     => 'ipa.example.com',
+    'auth.ldap.0.bind_dn'           => 'uid=openvpn-svc,cn=users,cn=accounts,dc=example,dc=com',
+    'auth.ldap.0.bind_pw'           => 'service_account_password',
+    'auth.ldap.0.users_base_dn'     => 'cn=users,cn=accounts,dc=example,dc=com',
+    'auth.ldap.0.use_ssl'           => 'always',
+    'auth.ldap.0.ssl_verify'        => 'host',
+    'auth.ldap.0.timeout'           => '4',
+    'auth.ldap.0.name'              => 'FreeIPA Authentication',
+
+    # Network configuration
+    'host.name'                     => $facts['networking']['fqdn'],
+    'vpn.server.daemon.enable'      => true,
+    'vpn.server.daemon.tcp.port'    => 443,
+    'vpn.server.daemon.udp.port'    => 1194,
+
+    # Routing - allow access to private networks
+    'vpn.server.routing.private_access'    => 'nat',
+    'vpn.server.routing.private_network.0' => '10.0.0.0/8',
+    'vpn.server.routing.private_network.1' => '172.16.0.0/12',
+    'vpn.server.routing.private_network.2' => '192.168.0.0/16',
+
+    # Client routing
+    'vpn.client.routing.reroute_gw'       => true,
+    'vpn.client.routing.reroute_dns'      => true,
+
+    # Security settings
+    'cs.tls_version_min'                   => '1.2',
+    'vpn.server.tls_cc_security'           => 'tls-crypt',
+  },
+}
+```
+
+**Benefits of FreeIPA integration:**
+
+- Users and groups managed centrally in FreeIPA
+- Single Sign-On (SSO) with Kerberos
+- Group-based VPN access policies
+- Simplified disaster recovery (only configuration backup needed)
+- Automatic user provisioning/deprovisioning
+
+**Backup strategy with LDAP:**
+
+```bash
+# Only configuration backup needed (users are in FreeIPA)
+sudo /usr/local/openvpn_as/scripts/sacli ConfigQuery > openvpn-config.json
+
+# Optional: backup certificates
+sudo tar -czf openvpn-certs.tar.gz /usr/local/openvpn_as/etc/web-ssl/
+```
+
 ## Reference
 
 See [REFERENCE.md](REFERENCE.md) for complete parameter documentation.
