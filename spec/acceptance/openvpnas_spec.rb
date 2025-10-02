@@ -3,21 +3,31 @@
 require 'voxpupuli/acceptance/spec_helper_acceptance'
 
 describe 'openvpnas class' do
-  hosts.each do |host|
-    context "when on #{host}" do
-      let(:pp) do
-        <<-MANIFEST
-          class { 'openvpnas':
-            manage_repo       => false,
-            manage_service    => false,
-          }
-        MANIFEST
-      end
+  context 'with default parameters' do
+    let(:pp) do
+      <<-PUPPET
+        class { 'openvpnas':
+          manage_repo    => false,
+          manage_service => false,
+        }
+      PUPPET
+    end
 
-      it 'applies with no errors' do
-        result = idempotent_apply(pp)
-        expect(result.exit_code).to eq(0)
-      end
+    it 'works idempotently with no errors' do
+      idempotent_apply(pp)
+    end
+  end
+
+  describe 'openvpnas package' do
+    it 'is installed' do
+      expect(package('openvpn-as')).to be_installed
+    end
+  end
+
+  describe 'openvpnas service' do
+    it 'is running' do
+      expect(service('openvpnas')).to be_running
+      expect(service('openvpnas')).to be_enabled
     end
   end
 end

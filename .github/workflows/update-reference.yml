@@ -1,0 +1,39 @@
+name: Update REFERENCE.md
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'manifests/**'
+      - 'types/**'
+
+permissions:
+  contents: write
+
+jobs:
+  update-reference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+      - name: Generate REFERENCE.md
+        run: bundle exec rake strings:generate:reference
+      - name: Commit changes if any
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          if ! git diff --exit-code REFERENCE.md; then
+            git add REFERENCE.md
+            git commit -m "Update REFERENCE.md [skip ci]"
+            git push
+          else
+            echo "REFERENCE.md is already up to date"
+          fi
+
