@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-# rubocop:disable RSpec/DescribeClass, RSpec/ImplicitSubject
+# rubocop:disable RSpec/DescribeClass
 describe 'openvpnas::config::key' do
   let(:title) { 'vpn.server.daemon.enable' }
   let(:params) do
@@ -15,11 +15,11 @@ describe 'openvpnas::config::key' do
 
       it { is_expected.to compile.with_all_deps }
 
-      it do
-        is_expected.to contain_exec('openvpnas-set-vpn.server.daemon.enable')
+      it 'creates exec to set configuration key' do
+        expect(catalogue).to contain_exec('openvpnas-set-vpn.server.daemon.enable')
           .with_command(/sacli -k vpn.server.daemon.enable -v 'true' ConfigPut/)
       end
     end
   end
 end
-# rubocop:enable RSpec/DescribeClass, RSpec/ImplicitSubject
+# rubocop:enable RSpec/DescribeClass
