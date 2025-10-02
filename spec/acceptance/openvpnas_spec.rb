@@ -3,13 +3,12 @@
 require 'spec_helper_acceptance'
 
 describe 'openvpnas class' do
-  context 'with minimal parameters' do
+  context 'with repo and package management' do
     it 'works with no errors' do
       pp = <<-PUPPET
         class { 'openvpnas':
-          manage_repo    => false,
+          manage_repo    => true,
           manage_service => false,
-          package_name   => 'tar',
         }
       PUPPET
 
