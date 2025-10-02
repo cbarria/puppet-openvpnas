@@ -3,6 +3,7 @@
 ---
 fixtures:
   forge_modules:
+    augeas_core: "puppetlabs/augeas_core"
     concat: "puppetlabs/concat"
     extlib: "puppet/extlib"
     stdlib: "puppetlabs/stdlib"
