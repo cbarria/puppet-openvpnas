@@ -13,7 +13,8 @@ describe 'openvpnas class' do
       PUPPET
 
       # Apply the manifest twice (ensure it's idempotent)
-      apply_manifest(pp, catch_failures: true)
+      result = apply_manifest(pp, catch_failures: true)
+      expect(result.exit_code).to be_zero
       apply_manifest(pp, catch_changes: true)
     end
   end
