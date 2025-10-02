@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'facterdb', '~> 1.18'
+gem 'facterdb', '~> 3.1'
 gem 'metadata-json-lint', '>= 2.0', '< 5.0'
 gem 'puppet', '~> 8.0'
 gem 'puppet-blacksmith', '~> 7.0', require: false
