@@ -23,7 +23,9 @@
 
 ## Description
 
-This module manages OpenVPN Access Server (AS) installation and configuration on RHEL-based systems. It provides comprehensive management capabilities including:
+This module manages OpenVPN Access Server (AS) installation and
+configuration on RHEL-based systems. It provides comprehensive management
+capabilities including:
 
 - Repository management for official OpenVPN AS packages
 - Package version locking to prevent unwanted upgrades
@@ -33,7 +35,9 @@ This module manages OpenVPN Access Server (AS) installation and configuration on
 - Bulk configuration import from JSON files
 - Idempotent operations with change detection
 
-OpenVPN Access Server is the commercial VPN solution from OpenVPN Inc., offering a web-based administration interface and easier setup compared to the community edition.
+OpenVPN Access Server is the commercial VPN solution from OpenVPN Inc.,
+offering a web-based administration interface and easier setup compared to
+the community edition.
 
 ## Setup
 
@@ -56,6 +60,7 @@ This module has the following dependencies:
 - puppetlabs/stdlib >= 9.0.0
 
 When using version locking features:
+
 - puppet/yum >= 8.0.0
 
 All dependencies are automatically installed when installing from Puppet Forge.
@@ -68,7 +73,8 @@ The simplest use case is to install OpenVPN Access Server with default settings:
 include openvpnas
 ```
 
-This installs the package from your system's configured repositories without managing the OpenVPN AS repository or service.
+This installs the package from your system's configured repositories without
+managing the OpenVPN AS repository or service.
 
 ## Usage
 
@@ -84,13 +90,15 @@ class { 'openvpnas':
 ```
 
 This configuration:
+
 - Configures the official OpenVPN AS yum repository
 - Installs the latest available `openvpn-as` package
 - Ensures the `openvpnas` service is running and enabled at boot
 
 ### Repository Management
 
-The module can manage the official OpenVPN AS repository. By default, it uses the RHEL 9 repository, but you can customize it:
+The module can manage the official OpenVPN AS repository. By default, it
+uses the RHEL 9 repository, but you can customize it:
 
 ```puppet
 class { 'openvpnas':
@@ -102,7 +110,8 @@ class { 'openvpnas':
 }
 ```
 
-If you have your own mirror or specific repository requirements, adjust these parameters accordingly.
+If you have your own mirror or specific repository requirements, adjust
+these parameters accordingly.
 
 ### Version Locking
 
@@ -118,11 +127,13 @@ class { 'openvpnas':
 ```
 
 Version locking is useful for:
+
 - Production stability where you need to control upgrade timing
 - Ensuring compatibility with specific configurations or integrations
 - Meeting compliance requirements for change control
 
-The `versionlock_release` parameter corresponds to the RPM release string and typically follows the pattern `1.el9` for RHEL 9.
+The `versionlock_release` parameter corresponds to the RPM release string
+and typically follows the pattern `1.el9` for RHEL 9.
 
 ### TLS Certificate Management
 
@@ -136,11 +147,13 @@ class { 'openvpnas':
 ```
 
 This creates symlinks in `/usr/local/openvpn_as/etc/web-ssl/`:
+
 - `server.crt` -> `cert.pem` (server certificate)
 - `server.key` -> `privkey.pem` (private key)
 - `ca.crt` -> `fullchain.pem` (certificate chain)
 
-The module automatically notifies the service to restart when certificates change, ensuring the web UI always uses current certificates.
+The module automatically notifies the service to restart when certificates
+change, ensuring the web UI always uses current certificates.
 
 Example with Certbot integration:
 
@@ -166,7 +179,8 @@ class { 'openvpnas':
 
 ### Configuration Management
 
-OpenVPN AS configuration is managed through the `sacli` command-line tool. This module provides two methods for configuration:
+OpenVPN AS configuration is managed through the `sacli` command-line tool.
+This module provides two methods for configuration:
 
 #### Individual Configuration Keys
 
@@ -187,9 +201,11 @@ class { 'openvpnas':
 }
 ```
 
-Each key-value pair is applied using `sacli ConfigPut` and automatically restarts the service if changes are detected.
+Each key-value pair is applied using `sacli ConfigPut` and automatically
+restarts the service if changes are detected.
 
 Common configuration keys include:
+
 - `vpn.server.daemon.enable`: Enable/disable VPN daemon
 - `vpn.server.daemon.tcp.port`: TCP port for VPN connections
 - `vpn.server.daemon.udp.port`: UDP port for VPN connections
@@ -217,6 +233,7 @@ openvpnas::config::key { 'enable-web-admin':
 ```
 
 This is useful when:
+
 - Managing configuration from multiple classes or modules
 - Conditionally applying configuration based on facts
 - Creating reusable configuration profiles
@@ -231,7 +248,8 @@ openvpnas::config::import { 'production-config':
 }
 ```
 
-The JSON file should contain the complete configuration database as exported by `sacli ConfigQuery`.
+The JSON file should contain the complete configuration database as
+exported by `sacli ConfigQuery`.
 
 Example JSON structure:
 
@@ -250,7 +268,8 @@ To export current configuration from a running server:
 /usr/local/openvpn_as/scripts/sacli ConfigQuery > config.json
 ```
 
-Optional parameter `refresh_on_change` controls whether to restart services after import (default: `true`):
+Optional parameter `refresh_on_change` controls whether to restart services
+after import (default: `true`):
 
 ```puppet
 openvpnas::config::import { 'staging-config':
@@ -306,8 +325,10 @@ See [REFERENCE.md](REFERENCE.md) for complete parameter documentation.
 - `version`: String specifying package version (default: `undef` for latest)
 - `versionlock_enable`: Boolean to enable version locking (default: `false`)
 - `manage_service`: Boolean to manage service state (default: `true`)
-- `manage_web_certs`: Boolean to manage TLS certificate symlinks (default: `false`)
-- `cert_source_path`: String path to certificate directory (default: Let's Encrypt path)
+- `manage_web_certs`: Boolean to manage TLS certificate symlinks
+  (default: `false`)
+- `cert_source_path`: String path to certificate directory
+  (default: Let's Encrypt path)
 - `config`: Hash of configuration key-value pairs (default: `undef`)
 
 ### Defined Types
@@ -317,6 +338,7 @@ See [REFERENCE.md](REFERENCE.md) for complete parameter documentation.
 Manages individual configuration keys through `sacli`.
 
 Parameters:
+
 - `key`: Configuration key name (required)
 - `value`: Configuration value - supports String, Integer, or Boolean (required)
 
@@ -325,6 +347,7 @@ Parameters:
 Imports bulk configuration from JSON file.
 
 Parameters:
+
 - `source`: Puppet file source path (required)
 - `refresh_on_change`: Boolean to restart service after import (default: `true`)
 
@@ -336,14 +359,19 @@ Tested and supported platforms:
 - CentOS 9 Stream
 - Rocky Linux 9 (should work but not CI tested)
 
-This module is designed specifically for OpenVPN Access Server, not the open-source OpenVPN Community Edition. The two products have different installation methods, configuration systems, and management tools.
+This module is designed specifically for OpenVPN Access Server, not the
+open-source OpenVPN Community Edition. The two products have different
+installation methods, configuration systems, and management tools.
 
 Limitations and known issues:
 
-- Initial password for `openvpn` user must be set manually after first installation
+- Initial password for `openvpn` user must be set manually after first
+  installation
 - Web UI will be unavailable until admin password is configured
-- Repository management currently only supports RHEL 9 family (configurable for other versions)
-- Configuration changes may require service restart which briefly interrupts VPN connections
+- Repository management currently only supports RHEL 9 family
+  (configurable for other versions)
+- Configuration changes may require service restart which briefly interrupts
+  VPN connections
 - TLS certificate management assumes Let's Encrypt directory structure
 
 ## Development
@@ -419,5 +447,5 @@ Apache-2.0 - See [LICENSE](LICENSE) file for details.
 
 ## Support
 
-For issues, questions, or contributions, please use the GitHub issue tracker:
-https://github.com/cbarria/puppet-openvpnas/issues
+For issues, questions, or contributions, please use the
+[GitHub issue tracker](https://github.com/cbarria/puppet-openvpnas/issues).
