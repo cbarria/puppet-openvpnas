@@ -2,10 +2,13 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 jobs:
-  test:
+  lint:
+    name: Lint & Syntax
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,10 +16,73 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
-      - run: bundle install --path .vendor
+      - name: Run lint checks
+        run: bundle exec rake lint
+      - name: Run syntax checks
+        run: bundle exec rake syntax
+      - name: Check metadata
+        run: bundle exec rake metadata_lint
+      - name: Run RuboCop
+        run: bundle exec rake rubocop
+
+  unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      matrix:
+        puppet:
+          - '7'
+          - '8'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+        env:
+          PUPPET_GEM_VERSION: "~> ${{ matrix.puppet }}.0"
+      - name: Run unit tests
+        run: bundle exec rake parallel_spec
+
+  documentation:
+    name: Documentation
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
       - name: Generate REFERENCE.md
         run: bundle exec rake strings:generate:reference
-      - run: bundle exec rake test
-      - name: Acceptance (AlmaLinux 9)
-        run: bundle exec rake acceptance:local docker_set=centos9
+      - name: Check if REFERENCE.md is up to date
+        run: |
+          if git diff --exit-code REFERENCE.md; then
+            echo "REFERENCE.md is up to date"
+          else
+            echo "REFERENCE.md is out of date, please run 'bundle exec rake strings:generate:reference'"
+            exit 1
+          fi
+
+  acceptance:
+    name: Acceptance Tests
+    runs-on: ubuntu-latest
+    needs: unit
+    strategy:
+      fail-fast: false
+      matrix:
+        setfile:
+          - centos9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+      - name: Run acceptance tests
+        run: bundle exec rake acceptance:local docker_set=${{ matrix.setfile }}
+        env:
+          BEAKER_debug: true
 

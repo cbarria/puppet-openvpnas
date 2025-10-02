@@ -1,9 +1,19 @@
 .bundle/
+.vendor/
+.yardoc
 pkg/
 spec/fixtures/manifests/
+spec/fixtures/modules/
 coverage/
-.vendor/
+log/
+junit/
+vendor/
 .DS_Store
 Gemfile.lock
+*.swp
+*.iml
+.vagrant/
+.idea/
+.rspec_status
 
 

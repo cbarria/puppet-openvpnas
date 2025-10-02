@@ -1,0 +1,14 @@
+---
+HOSTS:
+  almalinux9-64:
+    platform: el-9-x86_64
+    hypervisor: docker
+    image: almalinux:9
+    docker_preserve_image: true
+    docker_cmd: '["/usr/sbin/init"]'
+    docker_image_commands:
+      - 'dnf install -y crontabs initscripts tar wget'
+CONFIG:
+  log_level: debug
+  type: aio
+
