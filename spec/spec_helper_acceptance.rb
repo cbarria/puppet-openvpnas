@@ -6,4 +6,3 @@ configure_beaker do |host|
   install_module_on(host)
   install_module_dependencies_on(host)
 end
-
