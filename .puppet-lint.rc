@@ -1,4 +1,4 @@
---no-80chars-check
---no-autoloader_layout-check
---relative
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
+--fail-on-warnings

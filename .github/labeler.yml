@@ -1,20 +1,6 @@
 ---
-# Add 'documentation' label to any change to documentation files
-documentation:
-  - changed-files:
-      - any-glob-to-any-file: '**/*.md'
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
-# Add 'tests' label to any change to test files
-tests:
-  - changed-files:
-      - any-glob-to-any-file: 'spec/**/*'
-
-# Add 'manifests' label to any change to manifest files
-manifests:
-  - changed-files:
-      - any-glob-to-any-file: 'manifests/**/*'
-
-# Add 'github-actions' label to any change to GitHub Actions
-github-actions:
-  - changed-files:
-      - any-glob-to-any-file: '.github/workflows/*'
+skip-changelog:
+ - head-branch: ['^release-*', 'release']
